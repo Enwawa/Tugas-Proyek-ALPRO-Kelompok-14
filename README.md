@@ -17,10 +17,11 @@ Program ini dibuat dengan tujuan memudahkan petugas parkir dalam melayani pengun
 3. Lihat Riwayat Login: fitur ini untuk melihat siapa saja yang habis login pada hari itu
 4. Lihat Riwayat Parkir Kendaraan: fitur ini untuk melihat data kendaraan yang masih di dalam slot parkiran
 5. Pembayaran: fitur ini untuk transaksi pembayaran jika mobil keluar dari mall, dengan cara memasukan plat nomor kendaraan yang sudah di simpan pada data pengunjung tadi.
+
    Biaya yang di kenakan:
    * Motor: 2.000/jam
    * Mobil: 5.000/jam
    * Penitipan barang: 2.000/jam
    * Kehilangan karcis: 50.000
-6. 
+7. 
 
