@@ -1,7 +1,8 @@
 # Tugas-Proyek-ALPRO-Kelompok-14
-Nama: - C138 Enwa Wahyu Aditama
-      - C162 Muhammad Alfaridzi Aldhayani Putra
-      - C163 Marshal Undra Sibuan
+Nama:
+- C138 Enwa Wahyu Aditama
+- C162 Muhammad Alfaridzi Aldhayani Putra
+- C163 Marshal Undra Sibuan
 
 # Aplikasi sederhana Manajement Parkiran mall
 
