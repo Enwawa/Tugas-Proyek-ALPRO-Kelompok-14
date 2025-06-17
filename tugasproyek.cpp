@@ -940,6 +940,114 @@ void lihatKendaraanKeluar() {
     system("cls");  
 }
 
+void bubbleSortDataParkir() {
+    vector<string> data;
+    ifstream file("history_pengunjung.txt");
+    string baris;
+
+    while (getline(file, baris)) {
+        data.push_back(baris);
+    }
+    file.close();
+
+    if (data.empty()) {
+        cout << "Tidak ada data untuk diurutkan." << endl;
+        system("pause");
+        return;
+    }
+
+    // Bubble Sort berdasarkan plat nomor (kolom ke-4)
+    for (size_t i = 0; i < data.size() - 1; i++) {
+        for (size_t j = 0; j < data.size() - i - 1; j++) {
+            // Ambil plat dari baris j dan j+1
+            stringstream ss1(data[j]), ss2(data[j + 1]);
+            string t1, j1, k1, plat1, t2, j2, k2, plat2;
+
+            getline(ss1, t1, '|');
+            getline(ss1, k1, '|');
+            getline(ss1, j1, '|');
+            getline(ss1, plat1);
+
+            getline(ss2, t2, '|');
+            getline(ss2, k2, '|');
+            getline(ss2, j2, '|');
+            getline(ss2, plat2);
+
+            plat1.erase(0, plat1.find_first_not_of(" "));
+            plat2.erase(0, plat2.find_first_not_of(" "));
+
+            if (plat1 > plat2) {
+                swap(data[j], data[j + 1]);
+            }
+        }
+    }
+
+    cout << "===== DATA PENGUNJUNG TERURUT BERDASARKAN PLAT =====" << endl;
+    cout << "Tanggal | Jenis | Jam | Plat Nomor" << endl;
+    cout << "-----------------------------------------------" << endl;
+    for (const auto& d : data) {
+        cout << d << endl;
+    }
+    cout << "-----------------------------------------------" << endl;
+
+    system("pause");
+    system("cls");
+}
+
+void bubbleSortByJam() {
+    vector<string> data;
+    ifstream file("history_pengunjung.txt");
+    string baris;
+
+    while (getline(file, baris)) {
+        data.push_back(baris);
+    }
+    file.close();
+
+    if (data.empty()) {
+        cout << "Tidak ada data untuk diurutkan." << endl;
+        system("pause");
+        return;
+    }
+
+    // Bubble Sort berdasarkan jam datang (kolom ke-3)
+    for (size_t i = 0; i < data.size() - 1; i++) {
+        for (size_t j = 0; j < data.size() - i - 1; j++) {
+            stringstream ss1(data[j]), ss2(data[j + 1]);
+            string t1, k1, jam1, plat1, t2, k2, jam2, plat2;
+
+            getline(ss1, t1, '|');
+            getline(ss1, k1, '|');
+            getline(ss1, jam1, '|');
+            getline(ss1, plat1);
+
+            getline(ss2, t2, '|');
+            getline(ss2, k2, '|');
+            getline(ss2, jam2, '|');
+            getline(ss2, plat2);
+
+            jam1.erase(0, jam1.find_first_not_of(" "));
+            jam2.erase(0, jam2.find_first_not_of(" "));
+
+            if (jam1 > jam2) {
+                swap(data[j], data[j + 1]);
+            }
+        }
+    }
+
+    cout << "===== DATA PENGUNJUNG DIURUTKAN BERDASARKAN JAM =====" << endl;
+    cout << "Tanggal | Jenis | Jam | Plat Nomor" << endl;
+    cout << "-----------------------------------------------------" << endl;
+    for (const auto& d : data) {
+        cout << d << endl;
+    }
+    cout << "-----------------------------------------------------" << endl;
+
+    system("pause");
+    system("cls");
+}
+
+
 int main() {
     parkir mall;
     
@@ -960,7 +1068,9 @@ int main() {
                 cout << "| 6. Tambah jadwal shift petugas" << endl;
                 cout << "| 7. Lihat jadwal shift petugas" << endl;
                 cout << "| 8. Informasi Sementara Laporan Pendapatan" << endl ;
-				cout << "| 9. Lihat Daftar Kendaraan Keluar" << endl;  
+				cout << "| 9. Lihat Daftar Kendaraan Keluar" << endl; 
+				cout << "| 10. Urutkan data parkir berdasarkan plat" << endl;
+				cout << "| 11. Urutkan data berdasarkan jam datang" << endl;
                 cout << "| 0. Logout" << endl;
                 cout << "| Masukkan pilihan: ";
                 cin >> pilih;
@@ -978,6 +1088,8 @@ int main() {
                     case 7: lihatShiftPetugas(); break;
                     case 8: mall.laporanAkhirHari(); break;
                     case 9: lihatKendaraanKeluar(); break;
+                    case 10: bubbleSortDataParkir(); break;
+                    case 11: bubbleSortByJam(); break;
                     case 0: mall.logout(); break;
                     default: 
                         cout << "Pilihan tidak valid." << endl; 
