@@ -1068,9 +1068,9 @@ int main() {
                 cout << "| 6. Tambah jadwal shift petugas" << endl;
                 cout << "| 7. Lihat jadwal shift petugas" << endl;
                 cout << "| 8. Informasi Sementara Laporan Pendapatan" << endl ;
-				cout << "| 9. Lihat Daftar Kendaraan Keluar" << endl; 
-				cout << "| 10. Urutkan data parkir berdasarkan plat" << endl;
-				cout << "| 11. Urutkan data berdasarkan jam datang" << endl;
+		cout << "| 9. Lihat Daftar Kendaraan Keluar" << endl; 
+		cout << "| 10. Urutkan data parkir berdasarkan plat" << endl;
+		cout << "| 11. Urutkan data berdasarkan jam datang" << endl;
                 cout << "| 0. Logout" << endl;
                 cout << "| Masukkan pilihan: ";
                 cin >> pilih;
