@@ -7,6 +7,7 @@
 #include <regex>
 #include <sstream>
 using namespace std;
+void cariDataParkirByTahun();
 
 const int lantaiparkir = 3;
 const int tempatparkir = 4;
@@ -26,6 +27,8 @@ bool validasiTanggal(const string& tanggal) {
     regex pola("\\d{2}-\\d{2}-\\d{4}");
     return regex_match(tanggal, pola);
 }
+
+void cariDataParkirByJam();
 
 bool validasiJam(const string& jam) {
     regex pola("\\d{2}:\\d{2}");
@@ -1068,9 +1071,11 @@ int main() {
                 cout << "| 6. Tambah jadwal shift petugas" << endl;
                 cout << "| 7. Lihat jadwal shift petugas" << endl;
                 cout << "| 8. Informasi Sementara Laporan Pendapatan" << endl ;
-		cout << "| 9. Lihat Daftar Kendaraan Keluar" << endl; 
-		cout << "| 10. Urutkan data parkir berdasarkan plat" << endl;
-		cout << "| 11. Urutkan data berdasarkan jam datang" << endl;
+				cout << "| 9. Lihat Daftar Kendaraan Keluar" << endl; 
+				cout << "| 10. Urutkan data parkir berdasarkan plat" << endl;
+				cout << "| 11. Urutkan data berdasarkan jam datang" << endl;
+                cout << "| 12. Cari data parkir berdasarkan jam datang" << endl;
+                cout << "| 13. Cari data parkir berdasarkan tahun" << endl;
                 cout << "| 0. Logout" << endl;
                 cout << "| Masukkan pilihan: ";
                 cin >> pilih;
@@ -1090,6 +1095,8 @@ int main() {
                     case 9: lihatKendaraanKeluar(); break;
                     case 10: bubbleSortDataParkir(); break;
                     case 11: bubbleSortByJam(); break;
+                    case 12: cariDataParkirByJam(); break;
+                    case 13: cariDataParkirByTahun(); break;
                     case 0: mall.logout(); break;
                     default: 
                         cout << "Pilihan tidak valid." << endl; 
@@ -1111,4 +1118,106 @@ int main() {
         
     }
     return 0;
+}
+
+
+void cariDataParkirByJam() {
+    string cariJam;
+    cout << "===== CARI DATA PARKIR BERDASARKAN JAM =====" << endl;
+    cout << "Masukkan jam datang : ";
+    cin.ignore();
+    getline(cin, cariJam);
+
+    ifstream file("history_pengunjung.txt");
+    string baris;
+    bool ditemukan = false;
+
+    cout << "Hasil pencarian untuk jam datang '" << cariJam << "':" << endl;
+    cout << "--------------------------------------------------" << endl;
+
+    if (file.is_open()) {
+        while (getline(file, baris)) {
+            if (baris.find(cariJam) != string::npos) {
+                cout << baris << endl;
+                ditemukan = true;
+            }
+        }
+        file.close();
+    }
+
+    if (!ditemukan) {
+        cout << "Data tidak ditemukan." << endl;
+    }
+
+    cout << "--------------------------------------------------" << endl;
+    system("pause");
+    system("cls");
+}
+
+
+
+void cariDataParkirByTahun() {
+    vector< pair<int, string> > data;
+    ifstream file("history_pengunjung.txt");
+    string baris;
+
+    while (getline(file, baris)) {
+        if (baris.length() < 10) continue;
+        string tahun_str = baris.substr(6, 4); // Ambil posisi tahun dari format DD-MM-YYYY
+        try {
+            int tahun = stoi(tahun_str);
+            data.push_back({tahun, baris});
+        } catch (...) {
+            continue;
+        }
+    }
+    file.close();
+
+    if (data.empty()) {
+        cout << "Tidak ada data pengunjung." << endl;
+        system("pause");
+        return;
+    }
+
+    sort(data.begin(), data.end());
+
+    int target;
+    cout << "Masukkan tahun yang ingin dicari: ";
+    cin >> target;
+
+    int kiri = 0, kanan = data.size() - 1;
+    bool ditemukan = false;
+
+    cout << "Hasil pencarian untuk tahun " << target << ": ";
+    cout << "Tanggal | Jenis | Jam | Plat Nomor" << endl;
+    cout << "-----------------------------------" << endl;
+
+    while (kiri <= kanan) {
+        int tengah = (kiri + kanan) / 2;
+        if (data[tengah].first == target) {
+            ditemukan = true;
+
+            int i = tengah;
+            while (i >= 0 && data[i].first == target) i--;
+            i++;
+
+            while (i < data.size() && data[i].first == target) {
+                cout << data[i].second << endl;
+                i++;
+            }
+            break;
+        } else if (target < data[tengah].first) {
+            kanan = tengah - 1;
+        } else {
+            kiri = tengah + 1;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "Data tidak ditemukan untuk tahun tersebut." << endl;
+    }
+
+    cout << "-----------------------------------" << endl;
+    system("pause");
+    system("cls");
 }
